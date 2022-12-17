@@ -8,10 +8,12 @@ import com.example.foodmenuservice.controller.command.model.FoodMenuModel;
 import com.example.foodmenuservice.controller.command.model.FoodMenuUpdateModel;
 import com.example.foodmenuservice.controller.query.FindFoodMenuQuery;
 import com.example.foodmenuservice.controller.query.FoodMenuQueryModel;
+import com.example.foodmenuservice.pojo.FoodMenu;
 import com.example.foodmenuservice.service.FoodMenuService;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -109,6 +111,29 @@ public class FoodMenuController {
             result = e.getLocalizedMessage();
         }
         return  result;
+    }
+
+    @RabbitListener(queues = "reduceFoodMenuQueue")
+    public void reduceFoodMenu(List<FoodMenu> foodMenuList){
+        for (FoodMenu foodMenu: foodMenuList) {
+            if(foodMenu != null){
+                System.out.println("Update: "+foodMenu.get_id());
+                UpdateFoodMenuCommand command = UpdateFoodMenuCommand.builder()
+                        ._id(foodMenu.get_id())
+                        .name(foodMenu.getName())
+                        .price(foodMenu.getPrice())
+                        .foods(foodMenu.getFoods())
+                        .quantity(foodMenu.getQuantity()-1)
+                        .build();
+                try {
+                    commandGateway.sendAndWait(command);
+                    System.out.println("UpdateFoodMenu Complete");
+                }
+                catch (Exception e){
+                    System.out.println(e.getLocalizedMessage());
+                }
+            }
+        }
     }
 
 

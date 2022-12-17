@@ -6,12 +6,17 @@ package com.example.paymentservice.controller.event;
 import com.example.paymentservice.pojo.Payment;
 import com.example.paymentservice.service.PaymentsService;
 import org.axonframework.eventhandling.EventHandler;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PaymentEventsHandler {
     private final PaymentsService paymentsService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     public PaymentEventsHandler(PaymentsService paymentsService) {
         this.paymentsService = paymentsService;
@@ -26,11 +31,20 @@ public class PaymentEventsHandler {
 
     @EventHandler
     public void update(UpdatePaymentEvent event){
+        System.out.println("P_id: "+event.get_id());
+        System.out.println("O_id: "+event.getOrderId());
+        System.out.println("ChangeStatus: "+event.getPayment_status());
         Payment payment = new Payment();
         BeanUtils.copyProperties(event, payment);
         Payment paymentFind = paymentsService.findByPaymentId(event.get_id());
         if(paymentFind != null)
             paymentsService.updatePayment(payment);
+
+        if(event.getPayment_status().equals("complete")){
+            System.out.println("rabbitSend");
+            rabbitTemplate.convertAndSend("MyPaymentDirectExchange", "orderstatus", event.getOrderId());
+        }
+
     }
 
     @EventHandler

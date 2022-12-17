@@ -12,6 +12,7 @@ import com.example.ordersservice.service.OrdersService;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -126,6 +127,33 @@ public class OrderController {
         return  result;
     }
 
+
+    @RabbitListener(queues = "PaymentQueue")
+    public void paymentComplete(String orderId){
+        System.out.println("PaymentComplete: "+orderId);
+        Order order = ordersService.findByOrderId(orderId);
+        UpdateOrderCommand command = UpdateOrderCommand.builder()
+                ._id(orderId)
+                .name(order.getName())
+                .email(order.getEmail())
+                .phone(order.getPhone())
+                .time(order.getTime())
+                .reserve_date(order.getReserve_date())
+                .room(order.getRoom())
+                .microphone(order.getMicrophone())
+                .foodMenu(order.getFoodMenu())
+                .drinkMenu(order.getDrinkMenu())
+                .result(order.getResult())
+                .status("complete")
+                .build();
+        try {
+            commandGateway.sendAndWait(command);
+            System.out.println("UpdateOrder Complete");
+        }
+        catch (Exception e){
+            System.out.println(e.getLocalizedMessage());
+        }
+    }
 
 
 }
