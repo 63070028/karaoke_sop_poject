@@ -19,18 +19,18 @@ public class RoomEventsHandler {
 
     @EventHandler
     public void add(CreateRoomEvent event){
-        Room accessory = new Room();
-        BeanUtils.copyProperties(event, accessory);
-        roomsService.addRoom(accessory);
+        Room room = new Room();
+        BeanUtils.copyProperties(event, room);
+        roomsService.addRoom(room);
     }
 
     @EventHandler
     public void update(UpdateRoomEvent event){
-        Room accessory = new Room();
-        BeanUtils.copyProperties(event, accessory);
-        Room accessoryFind = roomsService.findByRoomId(event.get_id());
-        if(accessoryFind != null)
-            roomsService.updateRoom(accessory);
+        Room room = new Room();
+        BeanUtils.copyProperties(event, room);
+        Room roomFind = roomsService.findByRoomId(event.get_id());
+        if(roomFind != null)
+            roomsService.updateRoom(room);
     }
 
     @EventHandler

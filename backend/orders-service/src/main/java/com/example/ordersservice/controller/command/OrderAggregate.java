@@ -1,9 +1,11 @@
 package com.example.ordersservice.controller.command;
 
 
+import com.example.foodmenuservice.pojo.FoodMenu;
 import com.example.ordersservice.controller.event.CreateOrderEvent;
 import com.example.ordersservice.controller.event.DelOrderEvent;
 import com.example.ordersservice.controller.event.UpdateOrderEvent;
+import com.example.roomservice.pojo.Room;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -17,24 +19,20 @@ public class OrderAggregate {
 
     @AggregateIdentifier
     private String _id;
-
     private String name;
     private String email;
+    private String phone;
+
     private String reserve_date;
     private String time;
+
+    private Room room;
+    private int microphone;
+    private FoodMenu foodMenu;
+    private FoodMenu drinkMenu;
+
     private int result;
     private String status;
-
-    private String roomId;
-    private String roomName;
-    private String accessoryName;
-    private int microphone;
-
-    private String foodMenuSetId;
-    private String foodMenuName;
-
-    private String drinkMenuSetId;
-    private  String drinkMenuName;
 
 
     public OrderAggregate() {
@@ -52,17 +50,14 @@ public class OrderAggregate {
         this._id = event.get_id();
         this.name = event.getName();
         this.email = event.getEmail();
+        this.phone = event.getPhone();
         this.reserve_date = event.getReserve_date();
-        this.status = event.getStatus();
         this.time = event.getTime();
-        this.roomId = event.getRoomId();
-        this.roomName = event.getRoomName();
-        this.accessoryName = event.getAccessoryName();
+        this.room = event.getRoom();
         this.microphone = event.getMicrophone();
-        this.foodMenuName = event.getFoodMenuName();
-        this.foodMenuSetId = event.getFoodMenuSetId();
-        this.drinkMenuSetId = event.getDrinkMenuSetId();
-        this.drinkMenuName = event.getDrinkMenuName();
+        this.foodMenu = event.getFoodMenu();
+        this.drinkMenu = event.getDrinkMenu();
+        this.status = event.getStatus();
         this.result = event.getResult();
     }
 
@@ -78,17 +73,14 @@ public class OrderAggregate {
         this._id = event.get_id();
         this.name = event.getName();
         this.email = event.getEmail();
+        this.phone = event.getPhone();
         this.reserve_date = event.getReserve_date();
-        this.status = event.getStatus();
         this.time = event.getTime();
-        this.roomId = event.getRoomId();
-        this.roomName = event.getRoomName();
-        this.accessoryName = event.getAccessoryName();
+        this.room = event.getRoom();
         this.microphone = event.getMicrophone();
-        this.foodMenuName = event.getFoodMenuName();
-        this.foodMenuSetId = event.getFoodMenuSetId();
-        this.drinkMenuSetId = event.getDrinkMenuSetId();
-        this.drinkMenuName = event.getDrinkMenuName();
+        this.foodMenu = event.getFoodMenu();
+        this.drinkMenu = event.getDrinkMenu();
+        this.status = event.getStatus();
         this.result = event.getResult();
     }
 

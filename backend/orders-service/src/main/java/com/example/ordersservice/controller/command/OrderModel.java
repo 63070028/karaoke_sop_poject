@@ -1,15 +1,15 @@
-package com.example.ordersservice.controller.event;
-
+package com.example.ordersservice.controller.command;
 
 
 import com.example.foodmenuservice.pojo.FoodMenu;
 import com.example.roomservice.pojo.Room;
 import lombok.Data;
 
-@Data
-public class CreateOrderEvent {
+import java.io.Serializable;
 
-    private String _id;
+@Data
+public class OrderModel{
+
     private String name;
     private String email;
     private String phone;
@@ -24,7 +24,5 @@ public class CreateOrderEvent {
 
     private int result;
     private String status;
-
-
 
 }

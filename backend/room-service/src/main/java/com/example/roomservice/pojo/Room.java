@@ -1,21 +1,17 @@
 package com.example.roomservice.pojo;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.io.Serializable;
 
 @Data
-@Entity
-@Table(name = "rooms")
+@Document("Rooms")
 public class Room implements Serializable {
 
 
     @Id
-    @Column(unique = true)
     private String _id;
     private String name;
     private String accessory;

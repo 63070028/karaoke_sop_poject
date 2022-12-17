@@ -3,7 +3,7 @@ package com.example.ordersservice.controller;
 
 import com.example.ordersservice.controller.command.CreateOrderCommand;
 import com.example.ordersservice.controller.command.DelOrderCommand;
-import com.example.ordersservice.controller.command.OrdersModel;
+import com.example.ordersservice.controller.command.OrderModel;
 import com.example.ordersservice.controller.command.UpdateOrderCommand;
 import com.example.ordersservice.controller.query.FindOrdersQuery;
 import com.example.ordersservice.controller.query.OrderQueryModel;
@@ -52,27 +52,21 @@ public class OrderController {
 
 
     @RequestMapping(value = "/addOrder", method = RequestMethod.POST)
-    public String addOrder(@RequestBody OrdersModel order) {
+    public String addOrder(@RequestBody OrderModel order) {
         System.out.println("Add: "+order.getName());
         CreateOrderCommand command = CreateOrderCommand.builder()
                 ._id(UUID.randomUUID().toString())
                 .name(order.getName())
                 .email(order.getEmail())
-                .reserve_date(order.getReserve_date())
-                .status(order.getStatus())
+                .phone(order.getPhone())
                 .time(order.getTime())
-
-                .roomId(order.getRoomId())
-                .roomName(order.getRoomName())
-                .accessoryName(order.getAccessoryName())
+                .reserve_date(order.getReserve_date())
+                .room(order.getRoom())
                 .microphone(order.getMicrophone())
-
-                .foodMenuName(order.getFoodMenuName())
-                .foodMenuSetId(order.getFoodMenuSetId())
-                .drinkMenuSetId(order.getDrinkMenuSetId())
-                .drinkMenuName(order.getDrinkMenuName())
-
+                .foodMenu(order.getFoodMenu())
+                .drinkMenu(order.getDrinkMenu())
                 .result(order.getResult())
+                .status(order.getStatus())
                 .build();
         String result;
         try {
@@ -94,21 +88,15 @@ public class OrderController {
                 ._id(orderId)
                 .name(order.getName())
                 .email(order.getEmail())
-                .reserve_date(order.getReserve_date())
-                .status(status)
+                .phone(order.getPhone())
                 .time(order.getTime())
-
-                .roomId(order.getRoomId())
-                .roomName(order.getRoomName())
-                .accessoryName(order.getAccessoryName())
+                .reserve_date(order.getReserve_date())
+                .room(order.getRoom())
                 .microphone(order.getMicrophone())
-
-                .foodMenuName(order.getFoodMenuName())
-                .foodMenuSetId(order.getFoodMenuSetId())
-                .drinkMenuSetId(order.getDrinkMenuSetId())
-                .drinkMenuName(order.getDrinkMenuName())
-
+                .foodMenu(order.getFoodMenu())
+                .drinkMenu(order.getDrinkMenu())
                 .result(order.getResult())
+                .status(status)
                 .build();
         String result;
         try {

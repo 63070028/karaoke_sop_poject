@@ -20,13 +20,13 @@ public class RoomQueryHandler {
 
     @QueryHandler
     List<RoomQueryModel> findRooms(FindRoomsQuery query){
-        List<RoomQueryModel> accessories = new ArrayList<>();
+        List<RoomQueryModel> rooms = new ArrayList<>();
         List<Room> storedRooms = roomsService.showRooms();
         for (Room room: storedRooms) {
             RoomQueryModel roomQueryModel = new RoomQueryModel();
             BeanUtils.copyProperties(room, roomQueryModel);
-            accessories.add(roomQueryModel);
+            rooms.add(roomQueryModel);
         }
-        return  accessories;
+        return  rooms;
     }
 }

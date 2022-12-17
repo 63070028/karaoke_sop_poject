@@ -2,11 +2,11 @@ package com.example.roomservice.repository;
 
 
 import com.example.roomservice.pojo.Room;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
-public interface RoomRepository extends JpaRepository<Room, String> {
+public interface RoomRepository extends MongoRepository<Room, String> {
 
-    @Query(value = "SELECT * FROM ROOMS WHERE _ID = ?1", nativeQuery = true)
+    @Query(value="{ '_id' : ?0 }")
     Room findByRoomId(String _id);
 }
