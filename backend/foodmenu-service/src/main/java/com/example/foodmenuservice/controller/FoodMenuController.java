@@ -114,10 +114,11 @@ public class FoodMenuController {
     }
 
     @RabbitListener(queues = "reduceFoodMenuQueue")
-    public void reduceFoodMenu(List<FoodMenu> foodMenuList){
-        for (FoodMenu foodMenu: foodMenuList) {
+    public void reduceFoodMenu(List<String> foodMenuList){
+        for (String foodMenuId: foodMenuList) {
+            FoodMenu foodMenu = foodMenuService.findByFoodMenuId(foodMenuId);
             if(foodMenu != null){
-                System.out.println("Update: "+foodMenu.get_id());
+                System.out.println("reduceFoodMenu: "+foodMenu.getName());
                 UpdateFoodMenuCommand command = UpdateFoodMenuCommand.builder()
                         ._id(foodMenu.get_id())
                         .name(foodMenu.getName())

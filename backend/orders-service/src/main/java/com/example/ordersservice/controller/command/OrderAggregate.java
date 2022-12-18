@@ -82,6 +82,7 @@ public class OrderAggregate {
         this.drinkMenu = event.getDrinkMenu();
         this.status = event.getStatus();
         this.result = event.getResult();
+
     }
 
 

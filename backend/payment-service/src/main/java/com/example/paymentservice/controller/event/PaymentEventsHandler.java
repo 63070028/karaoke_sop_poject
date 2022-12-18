@@ -32,8 +32,7 @@ public class PaymentEventsHandler {
     @EventHandler
     public void update(UpdatePaymentEvent event){
         System.out.println("P_id: "+event.get_id());
-        System.out.println("O_id: "+event.getOrderId());
-        System.out.println("ChangeStatus: "+event.getPayment_status());
+        System.out.println("ChangeStatusPayment: "+event.getPayment_status());
         Payment payment = new Payment();
         BeanUtils.copyProperties(event, payment);
         Payment paymentFind = paymentsService.findByPaymentId(event.get_id());
@@ -41,7 +40,7 @@ public class PaymentEventsHandler {
             paymentsService.updatePayment(payment);
 
         if(event.getPayment_status().equals("complete")){
-            System.out.println("rabbitSend");
+            System.out.println("rabbitSendOrder:"+event.getOrderId());
             rabbitTemplate.convertAndSend("MyPaymentDirectExchange", "orderstatus", event.getOrderId());
         }
 

@@ -9,13 +9,17 @@ import com.example.ordersservice.controller.query.FindOrdersQuery;
 import com.example.ordersservice.controller.query.OrderQueryModel;
 import com.example.ordersservice.pojo.Order;
 import com.example.ordersservice.service.OrdersService;
+import com.example.ordersservice.service.SendEmailService;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +31,9 @@ public class OrderController {
     private  final QueryGateway queryGateway;
 
     private OrdersService ordersService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
 
     @Autowired
@@ -53,25 +60,29 @@ public class OrderController {
 
 
     @RequestMapping(value = "/addOrder", method = RequestMethod.POST)
-    public String addOrder(@RequestBody OrderModel order) {
-        System.out.println("Add: "+order.getName());
+    public String addOrder(@RequestBody OrderModel orderModel) {
+        System.out.println("Add: "+orderModel.getName());
         CreateOrderCommand command = CreateOrderCommand.builder()
                 ._id(UUID.randomUUID().toString())
-                .name(order.getName())
-                .email(order.getEmail())
-                .phone(order.getPhone())
-                .time(order.getTime())
-                .reserve_date(order.getReserve_date())
-                .room(order.getRoom())
-                .microphone(order.getMicrophone())
-                .foodMenu(order.getFoodMenu())
-                .drinkMenu(order.getDrinkMenu())
-                .result(order.getResult())
-                .status(order.getStatus())
+                .name(orderModel.getName())
+                .email(orderModel.getEmail())
+                .phone(orderModel.getPhone())
+                .time(orderModel.getTime())
+                .reserve_date(orderModel.getReserve_date())
+                .room(orderModel.getRoom())
+                .microphone(orderModel.getMicrophone())
+                .foodMenu(orderModel.getFoodMenu())
+                .drinkMenu(orderModel.getDrinkMenu())
+                .result(orderModel.getResult())
+                .status(orderModel.getStatus())
                 .build();
         String result;
         try {
             commandGateway.sendAndWait(command);
+
+            Order order = new Order();
+            BeanUtils.copyProperties(command, order);
+            ordersService.addOrder(order);
             result = "AddOrder Complete";
         }
         catch (Exception e){
@@ -102,13 +113,26 @@ public class OrderController {
         String result;
         try {
              commandGateway.sendAndWait(command);
+
+             Order orderUpdate = new Order();
+             BeanUtils.copyProperties(command, orderUpdate);
+             ordersService.updateOrder(orderUpdate);
              result = "UpdateOrder Complete";
+
+             if(orderUpdate.getStatus().equals("payment")){
+                 String message = "คุณ: "+orderUpdate.getName()+"/nเลขอ้างอิง: "+orderUpdate.get_id()+
+                         "/nได้จองเวลา: " +orderUpdate.getTime()+"/nจำนวนวเงินที่ต้องชำระ: "+orderUpdate.getResult()+
+                         "/nชำระเลขบัญชี: xxxxxxxxxxx"+"/n แจ้งชำระที่ www.xxxxx.com";
+                 new SendEmailService(orderUpdate.getEmail()).sendMail("แจ้งเตือนชำระเงิน KRAOKE", message);
+             }
+
         }
         catch (Exception e){
             result = e.getLocalizedMessage();
         }
         return  result;
     }
+
 
     @RequestMapping(value="/delOrder", method = RequestMethod.DELETE)
     public String deleteOrder(@RequestParam("orderId") String orderId) {
@@ -119,6 +143,8 @@ public class OrderController {
         String result;
         try {
             commandGateway.sendAndWait(command);
+
+            ordersService.delOrder(command.get_id());
             result = "DelOrder Complete";
         }
         catch (Exception e){
@@ -128,9 +154,12 @@ public class OrderController {
     }
 
 
+
+
+
     @RabbitListener(queues = "PaymentQueue")
     public void paymentComplete(String orderId){
-        System.out.println("PaymentComplete: "+orderId);
+        System.out.println("RabbitListener_PaymentComplete_OrderId: "+orderId);
         Order order = ordersService.findByOrderId(orderId);
         UpdateOrderCommand command = UpdateOrderCommand.builder()
                 ._id(orderId)
@@ -148,6 +177,22 @@ public class OrderController {
                 .build();
         try {
             commandGateway.sendAndWait(command);
+            Order orderUpdate = new Order();
+            BeanUtils.copyProperties(command, orderUpdate);
+            ordersService.updateOrder(orderUpdate);
+            System.out.println(command.getStatus());
+
+            if(command.getStatus().equals("complete")){
+                System.out.println("rabbitSendFood");
+                List<String> foodMenuList = new ArrayList<>();
+                if(command.getFoodMenu() != null){
+                    foodMenuList.add(command.getFoodMenu().get_id());
+                }
+                if(command.getDrinkMenu() != null){
+                    foodMenuList.add(command.getDrinkMenu().get_id());
+                }
+                rabbitTemplate.convertAndSend("MyOrderDirectExchange", "reducemenu", foodMenuList);
+            }
             System.out.println("UpdateOrder Complete");
         }
         catch (Exception e){
