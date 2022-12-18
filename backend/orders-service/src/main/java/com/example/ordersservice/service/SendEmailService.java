@@ -33,10 +33,6 @@ public class SendEmailService {
     private String send_email;
     private final Gmail service;
 
-//    public SendEmailService(String send_email, Gmail service) {
-//        this.send_email = send_email;
-//        this.service = service;
-//    }
 
     public SendEmailService(String send_email) throws Exception {
         this.send_email = send_email;
@@ -91,4 +87,12 @@ public class SendEmailService {
             }
         }
     }
+
+//    public static void main(String[] args) throws Exception{
+//        String message = "";
+//        new SendEmailService("email@gmail.com").sendMail("xxxx", message);
+//    }
 }
+
+
+

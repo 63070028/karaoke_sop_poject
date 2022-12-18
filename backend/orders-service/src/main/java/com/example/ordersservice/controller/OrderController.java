@@ -8,6 +8,7 @@ import com.example.ordersservice.controller.command.UpdateOrderCommand;
 import com.example.ordersservice.controller.query.FindOrdersQuery;
 import com.example.ordersservice.controller.query.OrderQueryModel;
 import com.example.ordersservice.pojo.Order;
+import com.example.ordersservice.service.MessageService;
 import com.example.ordersservice.service.OrdersService;
 import com.example.ordersservice.service.SendEmailService;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -32,15 +33,18 @@ public class OrderController {
 
     private OrdersService ordersService;
 
+    private MessageService messageService;
+
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
 
     @Autowired
-    public OrderController(CommandGateway commandGateway, QueryGateway queryGateway, OrdersService ordersService) {
+    public OrderController(CommandGateway commandGateway, QueryGateway queryGateway, OrdersService ordersService, MessageService messageService) {
         this.commandGateway = commandGateway;
         this.queryGateway = queryGateway;
         this.ordersService = ordersService;
+        this.messageService = messageService;
     }
 
     @RequestMapping(value = "/getOrders", method = RequestMethod.GET)
@@ -83,6 +87,10 @@ public class OrderController {
             Order order = new Order();
             BeanUtils.copyProperties(command, order);
             ordersService.addOrder(order);
+
+            String message = messageService.messageAddOrder(order);
+            new SendEmailService(order.getEmail()).sendMail("ร้าน SOP KARAOKE ได้รับคำสั่งซื้อของคุณแล้ว", message);
+
             result = "AddOrder Complete";
         }
         catch (Exception e){
@@ -120,10 +128,13 @@ public class OrderController {
              result = "UpdateOrder Complete";
 
              if(orderUpdate.getStatus().equals("payment")){
-                 String message = "คุณ: "+orderUpdate.getName()+"/nเลขอ้างอิง: "+orderUpdate.get_id()+
-                         "/nได้จองเวลา: " +orderUpdate.getTime()+"/nจำนวนวเงินที่ต้องชำระ: "+orderUpdate.getResult()+
-                         "/nชำระเลขบัญชี: xxxxxxxxxxx"+"/n แจ้งชำระที่ www.xxxxx.com";
-                 new SendEmailService(orderUpdate.getEmail()).sendMail("แจ้งเตือนชำระเงิน KRAOKE", message);
+                 String message = messageService.messagePayment(orderUpdate);
+                 new SendEmailService(orderUpdate.getEmail()).sendMail("แจ้งเตือนชำระเงิน SOP KARAOKE", message);
+             }
+
+             if(orderUpdate.getStatus().equals("cancel")){
+                 String message = messageService.messageCancelOrder(orderUpdate);
+                 new SendEmailService(orderUpdate.getEmail()).sendMail("คำสั่งซื้อ SOP KARAOKE ของคุณถูกยกเลิก", message);
              }
 
         }
