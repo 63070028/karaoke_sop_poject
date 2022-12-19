@@ -45,13 +45,13 @@ public class FoodMenuController {
         return foodMenu;
     }
 
-//    @RequestMapping(value = "/getFoodMenu", method = RequestMethod.GET)
-//    public FoodMenu getFoodMenu(@RequestParam("foodMenuId") String foodMenuId){
-//        System.out.println(foodMenuId);
-//        FoodMenu foodMenu = foodMenuService.findByFoodMenuId(foodMenuId);
-//        System.out.println(foodMenu.getName());
-//        return  foodMenu;
-//    }
+    @RequestMapping(value = "/getFoodMenu", method = RequestMethod.GET)
+    public FoodMenu getFoodMenu(@RequestParam("foodMenuId") String foodMenuId){
+        System.out.println(foodMenuId);
+        FoodMenu foodMenu = foodMenuService.findByFoodMenuId(foodMenuId);
+        System.out.println(foodMenu.getName());
+        return  foodMenu;
+    }
 
 
     @RequestMapping(value = "/addFoodMenu", method = RequestMethod.POST)
@@ -60,14 +60,14 @@ public class FoodMenuController {
         CreateFoodMenuCommand command = CreateFoodMenuCommand.builder()
                 ._id(UUID.randomUUID().toString())
                 .name(foodMenu.getName())
+                .type(foodMenu.getType())
                 .price(foodMenu.getPrice())
                 .foods(foodMenu.getFoods())
                 .quantity(foodMenu.getQuantity())
                 .build();
         String result;
         try {
-            commandGateway.sendAndWait(command);
-            result = "AddFoodMenu Complete";
+            result = commandGateway.sendAndWait(command);
         }
         catch (Exception e){
             result = e.getLocalizedMessage();
@@ -75,12 +75,13 @@ public class FoodMenuController {
         return  result;
     }
 //
-    @RequestMapping(value="/updatFoodMenu", method = RequestMethod.POST)
+    @RequestMapping(value="/updateFoodMenu", method = RequestMethod.POST)
     public String updateFoodMenu(@RequestBody FoodMenuUpdateModel foodMenu){
         System.out.println("Update: "+foodMenu.get_id());
         UpdateFoodMenuCommand command = UpdateFoodMenuCommand.builder()
                 ._id(foodMenu.get_id())
                 .name(foodMenu.getName())
+                .type(foodMenu.getType())
                 .price(foodMenu.getPrice())
                 .foods(foodMenu.getFoods())
                 .quantity(foodMenu.getQuantity())
@@ -113,6 +114,8 @@ public class FoodMenuController {
         return  result;
     }
 
+
+
     @RabbitListener(queues = "reduceFoodMenuQueue")
     public void reduceFoodMenu(List<String> foodMenuList){
         for (String foodMenuId: foodMenuList) {
@@ -122,6 +125,7 @@ public class FoodMenuController {
                 UpdateFoodMenuCommand command = UpdateFoodMenuCommand.builder()
                         ._id(foodMenu.get_id())
                         .name(foodMenu.getName())
+                        .type(foodMenu.getType())
                         .price(foodMenu.getPrice())
                         .foods(foodMenu.getFoods())
                         .quantity(foodMenu.getQuantity()-1)

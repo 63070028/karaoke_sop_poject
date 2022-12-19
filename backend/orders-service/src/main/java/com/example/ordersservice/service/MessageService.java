@@ -8,7 +8,7 @@ public class MessageService {
 
      public String messagePayment(Order order){
          String food = order.getFoodMenu()!=null?"ชุดเครื่องดื่ม: "+order.getFoodMenu().getName()+"   ราคา: "+order.getFoodMenu().getPrice():"ชุดเครื่องดื่ม: ไม่รับ";
-         String drink = order.getDrinkMenu()!=null?"ชุดเครื่องดื่ม: "+order.getFoodMenu().getName()+"   ราคา: "+order.getFoodMenu().getPrice():"ชุดเครื่องดื่ม: ไม่่รับ";
+         String drink = order.getDrinkMenu()!=null?"ชุดเครื่องดื่ม: "+order.getFoodMenu().getName()+"   ราคา: "+order.getFoodMenu().getPrice():"ชุดเครื่องดื่ม: ไม่รับ";
          return  "           แจ้งยอดชำระ         "+"\n\n"+
                  "เลขอ้างอิงคำสั่งซื้อ: "+order.get_id()+"\n\n"+
                  "ลูกค้า: "+order.getName()+"\n\n"+
