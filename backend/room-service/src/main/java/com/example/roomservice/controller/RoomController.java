@@ -4,7 +4,9 @@ package com.example.roomservice.controller;
 import com.example.roomservice.controller.command.CreateRoomCommand;
 import com.example.roomservice.controller.command.DelRoomCommand;
 import com.example.roomservice.controller.command.Model.RoomModel;
+import com.example.roomservice.controller.command.Model.RoomUpdateModel;
 import com.example.roomservice.controller.command.Model.Rooms;
+import com.example.roomservice.controller.command.UpdateRoomCommand;
 import com.example.roomservice.controller.query.FindRoomsQuery;
 import com.example.roomservice.controller.query.RoomQueryModel;
 import com.example.roomservice.service.RoomsService;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class RoomController {
 
@@ -92,25 +95,26 @@ public class RoomController {
         return  result;
     }
 
-//    @RequestMapping(value="/updateRoom", method = RequestMethod.POST)
-//    public String updateRoom(@RequestBody RoomModel room){
-//        System.out.println("Update: "+room.getName());
-//        UpdateRoomCommand command = UpdateRoomCommand.builder()
-//                .roomId(room.getRoomId())
-//                .name(room.getName())
-//                .price(room.getPrice())
-//                .quantity(room.getQuantity())
-//                .build();
-//        String result;
-//        try {
-//             commandGateway.sendAndWait(command);
-//             result = "UpdateRoom Complete";
-//        }
-//        catch (Exception e){
-//            result = e.getLocalizedMessage();
-//        }
-//        return  result;
-//    }
+    @RequestMapping(value="/updateRoom", method = RequestMethod.POST)
+    public String updateRoom(@RequestBody RoomUpdateModel room){
+        System.out.println("Update: "+room.getName());
+        UpdateRoomCommand command = UpdateRoomCommand.builder()
+                ._id(room.get_id())
+                .accessory(room.getAccessory())
+                .detail(room.getDetail())
+                .name(room.getName())
+                .price(room.getPrice())
+                .build();
+        String result;
+        try {
+             commandGateway.sendAndWait(command);
+             result = "UpdateRoom Complete";
+        }
+        catch (Exception e){
+            result = e.getLocalizedMessage();
+        }
+        return  result;
+    }
 
     @RequestMapping(value="/delRoom", method = RequestMethod.DELETE)
     public String deleteRoom(@RequestParam("_id") String _id) {

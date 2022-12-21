@@ -4,6 +4,7 @@ package com.example.roomservice.controller.command;
 
 import com.example.roomservice.controller.event.CreateRoomEvent;
 import com.example.roomservice.controller.event.DelRoomEvent;
+import com.example.roomservice.controller.event.UpdateRoomEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
@@ -40,20 +41,21 @@ public class RoomAggregate {
         this.name = event.getName();
     }
 
-//    @CommandHandler
-//    public void handle(UpdateRoomCommand command){
-//        System.out.println("UpdateRoomCommand");
-//        UpdateRoomEvent event = new UpdateRoomEvent();
-//        BeanUtils.copyProperties(command, event);
-//        AggregateLifecycle.apply(event);
-//    }
-//    @EventSourcingHandler
-//    public void on(UpdateRoomEvent event){
-//        this.accessoryId = event.getRoomId();
-//        this.name = event.getName();
-//        this.price = event.getPrice();
-//        this.quantity = event.getQuantity();
-//    }
+    @CommandHandler
+    public void handle(UpdateRoomCommand command){
+        System.out.println("UpdateRoomCommand");
+        UpdateRoomEvent event = new UpdateRoomEvent();
+        BeanUtils.copyProperties(command, event);
+        AggregateLifecycle.apply(event);
+    }
+    @EventSourcingHandler
+    public void on(UpdateRoomEvent event){
+        this._id = event.get_id();
+        this.price = event.getPrice();
+        this.detail = event.getDetail();
+        this.accessory = event.getAccessory();
+        this.name = event.getName();
+    }
 
 
     @CommandHandler

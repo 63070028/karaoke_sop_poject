@@ -17,7 +17,7 @@ public class MessageService {
                  drink +"\n\n"+
                  "รวมยอด: "+order.getResult()+"\n\n\n\n"+
                  "ชำระได้ที่เลขบัญชี: XXXXXXXXXXXXXXXX นาย XXXXX XXXXX"+"\n\n"+
-                 "แจ้งโอนที่ได้ www.xxxxxx.com"
+                 "แจ้งโอนที่ได้ http://localhost:8080/Paymentpage"
                  ;
      }
 

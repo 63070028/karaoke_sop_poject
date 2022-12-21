@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface OrderRepository extends MongoRepository<Order, String> {
 
 
-//    @Query(value = "SELECT * FROM ORDERS WHERE ORDER_ID = ?1", nativeQuery = true)
 
     @Query(value="{ '_id' : ?0 }")
     public Order findOrderByOrderId(String orderId);

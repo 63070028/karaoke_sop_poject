@@ -13,7 +13,8 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.Message;
-import org.apache.commons.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.Base64;
+
 
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
@@ -89,8 +90,8 @@ public class SendEmailService {
     }
 
 //    public static void main(String[] args) throws Exception{
-//        String message = "";
-//        new SendEmailService("email@gmail.com").sendMail("xxxx", message);
+//        String message = "44444";
+//        new SendEmailService("63070141@kmitl.ac.th").sendMail("xxxx", message);
 //    }
 }
 

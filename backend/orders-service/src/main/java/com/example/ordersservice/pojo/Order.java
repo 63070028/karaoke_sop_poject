@@ -33,15 +33,6 @@ public class Order implements Serializable {
     private int result;
     private String status;
 
-//    private String roomId;
-//    private String roomName;
-//    private String accessoryName;
-//    private String foodMenuSetId;
-//    private String foodMenuName;
-//    private String drinkMenuSetId;
-//    private  String drinkMenuName;
-
-
 
     public Order() {
     }
