@@ -14,5 +14,6 @@ public class UpdateFoodMenuEvent {
     private List<String> foods;
     private int price;
     private int quantity;
+    private String img;
 
 }

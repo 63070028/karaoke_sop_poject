@@ -21,6 +21,7 @@ public class RoomAggregate {
     private String accessory;
     private int price;
     private String detail;
+    private String img;
 
     public RoomAggregate() {
     }
@@ -39,6 +40,7 @@ public class RoomAggregate {
         this.detail = event.getDetail();
         this.accessory = event.getAccessory();
         this.name = event.getName();
+        this.img = event.getImg();
     }
 
     @CommandHandler
@@ -55,6 +57,7 @@ public class RoomAggregate {
         this.detail = event.getDetail();
         this.accessory = event.getAccessory();
         this.name = event.getName();
+        this.img = event.getImg();
     }
 
 

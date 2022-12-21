@@ -10,4 +10,5 @@ public class UpdateRoomEvent {
     private String accessory;
     private int price;
     private String detail;
+    private String img;
 }

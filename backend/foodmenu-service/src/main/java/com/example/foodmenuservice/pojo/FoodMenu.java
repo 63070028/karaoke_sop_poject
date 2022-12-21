@@ -22,21 +22,22 @@ public class FoodMenu implements Serializable {
     private List<String> foods;
     private int price;
     private int quantity;
+    private String img;
 
 
 
 
-//    private Object details;
 
     public FoodMenu() {
     }
 
-    public FoodMenu(String _id, String name, String type, List<String> foods, int price, int quantity) {
+    public FoodMenu(String _id, String name, String type, List<String> foods, int price, int quantity, String img) {
         this._id = _id;
         this.name = name;
         this.type = type;
         this.foods = foods;
         this.price = price;
         this.quantity = quantity;
+        this.img = img;
     }
 }

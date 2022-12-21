@@ -64,6 +64,7 @@ public class FoodMenuController {
                 .price(foodMenu.getPrice())
                 .foods(foodMenu.getFoods())
                 .quantity(foodMenu.getQuantity())
+                .img(foodMenu.getImg())
                 .build();
         String result;
         try {
@@ -85,6 +86,7 @@ public class FoodMenuController {
                 .price(foodMenu.getPrice())
                 .foods(foodMenu.getFoods())
                 .quantity(foodMenu.getQuantity())
+                .img(foodMenu.getImg())
                 .build();
         String result;
         try {
@@ -129,6 +131,7 @@ public class FoodMenuController {
                         .price(foodMenu.getPrice())
                         .foods(foodMenu.getFoods())
                         .quantity(foodMenu.getQuantity()-1)
+                        .img(foodMenu.getImg())
                         .build();
                 try {
                     commandGateway.sendAndWait(command);

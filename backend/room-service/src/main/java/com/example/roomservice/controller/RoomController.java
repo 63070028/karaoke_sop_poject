@@ -57,6 +57,7 @@ public class RoomController {
                 .detail(room.getDetail())
                 .name(room.getName())
                 .price(room.getPrice())
+                .img(room.getImg())
                 .build();
 
         String result;
@@ -81,6 +82,7 @@ public class RoomController {
                     .detail(room.getDetail())
                     .name(room.getName())
                     .price(room.getPrice())
+                    .img(room.getImg())
                     .build();
             try {
                 commandGateway.sendAndWait(command);
@@ -104,6 +106,7 @@ public class RoomController {
                 .detail(room.getDetail())
                 .name(room.getName())
                 .price(room.getPrice())
+                .img(room.getImg())
                 .build();
         String result;
         try {

@@ -17,4 +17,5 @@ public class CreateFoodMenuCommand {
     private List<String> foods;
     private int price;
     private int quantity;
+    private String img;
 }

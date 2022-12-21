@@ -17,17 +17,19 @@ public class Room implements Serializable {
     private String accessory;
     private int price;
     private String detail;
+    private String img;
 
 
 
     public Room() {
     }
 
-    public Room(String _id, String name, String accessory, int price, String detail) {
+    public Room(String _id, String name, String accessory, int price, String detail, String img) {
         this._id = _id;
         this.name = name;
         this.accessory = accessory;
         this.price = price;
         this.detail = detail;
+        this.img = img;
     }
 }

@@ -18,4 +18,5 @@ public class UpdateFoodMenuCommand {
     private List<String> foods;
     private int price;
     private int quantity;
+    private String img;
 }

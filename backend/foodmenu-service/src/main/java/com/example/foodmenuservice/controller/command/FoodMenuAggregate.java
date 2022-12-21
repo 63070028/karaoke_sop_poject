@@ -28,6 +28,7 @@ public class FoodMenuAggregate {
     private List<String> foods;
     private int price;
     private int quantity;
+    private String img;
 
 
 
@@ -49,6 +50,7 @@ public class FoodMenuAggregate {
         this.price = event.getPrice();
         this.foods = event.getFoods();
         this.quantity = event.getQuantity();
+        this.img = event.getImg();
     }
 
     @CommandHandler
@@ -65,6 +67,7 @@ public class FoodMenuAggregate {
         this.price = event.getPrice();
         this.foods = event.getFoods();
         this.quantity = event.getQuantity();
+        this.img = event.getImg();
     }
 
 
