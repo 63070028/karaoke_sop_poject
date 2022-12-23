@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300&display=swap');
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+body {
+    font-family: 'Prompt', sans-serif;
+    background-color: #fbfbfd;
+}
+
+.sumary-card{
+    border-color: black;
+    border-width: 10px;
+    margin-top: 15px;
+}
+.button {
+    border-radius: 4px;
+    background-color: gray;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    width: auto;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button:hover span {
+    padding-right: 25px;
+}
+
+.button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+/*.container {*/
+/*    margin: 30px auto;*/
+/*    width: 600px;*/
+/*}*/
+
+.col4 {
+    float: left;
+    position: relative;
+}
+.transition {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+body .projects {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.fx5 .item {
+    margin: 10px 0;
+}
+
+/* active on focus for accessibility tab navigation */
+
+.fx5 .item {
+    padding: 0;
+}
+.fx5 .item img {
+    padding: 0 !important;
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.fx5 a:hover .item img,
+.fx5 a:focus .item img {
+    opacity: 0.8;
+}
+.fx5 h4,
+.fx5 p {
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+.fx5 a .item h4 {
+    font-family: "Raleway", sans-serif;
+    font-size: 16px;
+    position: absolute;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-color: #b5b5b5;
+    padding: 5px 10px;
+    position: absolute;
+    bottom: 10%;
+    left: 0%;
+    opacity: 0;
+}
+.fx5 a:hover .item h4,
+.fx5 a:focus .item h4 {
+    opacity: 1;
+    left: 10%;
+}
+.fx5 a .item p {
+    font-family: "Raleway", sans-serif;
+    font-size: 8px;
+    position: absolute;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-color: #b5b5b5;
+    padding: 5px 10px;
+    position: absolute;
+    bottom: 7%;
+    left: 0%;
+    opacity: 0;
+}
+.fx5 a:hover .item p,
+.fx5 a:focus .item p {
+    opacity: 1;
+    left: 10%;
+}
+
+@media screen and (max-width: 991px) {
+    .col4 {
+        width: 50%;
+    }
+    .fx5 a .item h4 {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .col4 {
+        width: 100%;
+    }
+}

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 public class MessageService {
 
      public String messagePayment(Order order){
-         String food = order.getFoodMenu()!=null?"ชุดเครื่องดื่ม: "+order.getFoodMenu().getName()+"   ราคา: "+order.getFoodMenu().getPrice():"ชุดเครื่องดื่ม: ไม่รับ";
-         String drink = order.getDrinkMenu()!=null?"ชุดเครื่องดื่ม: "+order.getFoodMenu().getName()+"   ราคา: "+order.getFoodMenu().getPrice():"ชุดเครื่องดื่ม: ไม่รับ";
+         String food = order.getFoodMenu()!=null?"ชุดอาหาร: "+order.getFoodMenu().getName()+"   ราคา: "+order.getFoodMenu().getPrice():"ชุดอาหาร: ไม่รับ";
+         String drink = order.getDrinkMenu()!=null?"ชุดเครื่องดื่ม: "+order.getDrinkMenu().getName()+"   ราคา: "+order.getDrinkMenu().getPrice():"ชุดเครื่องดื่ม: ไม่รับ";
          return  "           แจ้งยอดชำระ         "+"\n\n"+
                  "เลขอ้างอิงคำสั่งซื้อ: "+order.get_id()+"\n\n"+
                  "ลูกค้า: "+order.getName()+"\n\n"+
@@ -16,7 +16,7 @@ public class MessageService {
                  food +"\n\n"+
                  drink +"\n\n"+
                  "รวมยอด: "+order.getResult()+"\n\n\n\n"+
-                 "ชำระได้ที่เลขบัญชี: XXXXXXXXXXXXXXXX นาย XXXXX XXXXX"+"\n\n"+
+                 "ชำระได้ที่เลขบัญชี: 033-342-5475(กสิกร) นายฏังกบดี สถิตเกษมสานต์"+"\n\n"+
                  "แจ้งโอนที่ได้ http://localhost:8080/Paymentpage"
                  ;
      }
@@ -25,14 +25,14 @@ public class MessageService {
          return "               ขอบคุณที่มาใช้บริการ SOP KARAOKE             "+"\n\n\n"+
                  "เลขอ้างอิงคำสั่งซื้อ: "+order.get_id()+"\n\n\n"+
                  "กรุณารอการตรวจสอบประมาณ 1-3 ชั่วโมง"+"\n\n"+
-                 "หากไม่มีการตอบรับสามารถติดต่อได้ที่ email: sop.karaoke@gmail.com เบอร์ติดต่อ: 080-xxx-xxxx"
+                 "หากไม่มีการตอบรับสามารถติดต่อได้ที่ email: sop.karaoke@gmail.com เบอร์ติดต่อ: 081-571-1106"
                  ;
     }
 
     public String messageCancelOrder(Order order){
         return "               คำสั่งซื้อ SOP KARAOKE ของคุณถูกยกเลิกขออภัยในความไม่สะดวก             "+"\n\n\n"+
                 "เลขอ้างอิงคำสั่งซื้อ: "+order.get_id()+"\n\n\n"+
-                "ลูกค้าสามารถติดต่อสอบถามได้ที่ email: sop.karaoke@gmail.com เบอร์ติดต่อ: 080-xxx-xxxx"+"\n\n"
+                "ลูกค้าสามารถติดต่อสอบถามได้ที่ email: sop.karaoke@gmail.com เบอร์ติดต่อ: 081-571-1106"+"\n\n"
                 ;
     }
 

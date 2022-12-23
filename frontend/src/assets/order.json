@@ -1,0 +1,66 @@
+[
+    {
+        "_id": "afe57b88-c293-47af-8eba-c1393d38904d",
+        "name": "kkkk",
+        "email": "63070141@kmitl.ac.th",
+        "phone": "08000000",
+        "reserve_date": "2022-12-19",
+        "time": "19.00",
+        "room": {
+          "name": "mediuamroom",
+          "price": 2500,
+          "detail": "ห้องนี้เป็นห้องที่มีขนาดกลางสามารถจุคนได้ 5-11 คนเหมาะสำหรับคนที่มาร้องเพลงกับเพื่อนจำนวนมากขึ้น จะมีไมค์เริ่มต้นให้ 5 อัน"
+        },
+        "microphone": 2,
+        "foodMenu": {
+          "_id": "230d5743-6bf8-4446-b1fd-7d688d0d9d91",
+          "name": "Menu SetA",
+          "type": "food",
+          "foods": [
+            "test x1",
+            "test2 x1"
+          ],
+          "price": 250,
+          "quantity": 1
+        },
+        "drinkMenu": {
+          "price": 2500,
+          "quantity": 0
+        },
+        "result": 5250,
+        "status": "pending",
+        "_class": "com.example.ordersservice.pojo.Order"
+      },
+      {
+        "_id": "d1dc78a9-a10c-48e6-a939-2a01b5ea8a53",
+        "name": "นายยศนันทน์ กลัดแขก",
+        "email": "63070141@kmitl.ac.th",
+        "phone": "08000000",
+        "reserve_date": "2022-12-19",
+        "time": "19.00",
+        "room": {
+          "name": "partyroom",
+          "price": 5500,
+          "detail": "ห้องนี้เป็นห้องพิเศษเหมาะสำหรับจัดปาร์ตี้ขนาดใหญ่มากๆสำหรับงานจัดเลี้ยงของบริษัทขนาดกลางถึงใหญ่ สามารถจุคนได้ 20-50 คนจะมีไมค์เริ่มต้นให้ 20 อัน"
+        },
+        "microphone": 1,
+        "foodMenu": {
+          "_id": "230d5743-6bf8-4446-b1fd-7d688d0d9d91",
+          "name": "Menu SetA",
+          "type": "food",
+          "foods": [
+            "test x1",
+            "test2 x1"
+          ],
+          "price": 250,
+          "quantity": 1
+        },
+        "drinkMenu": {
+          "price": 3000,
+          "quantity": 0
+        },
+        "result": 8750,
+        "status": "pending",
+        "_class": "com.example.ordersservice.pojo.Order"
+      }
+]
